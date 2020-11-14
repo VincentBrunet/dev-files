@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 export interface ComponentProps {}
 export interface ComponentState {}
@@ -12,13 +12,13 @@ export abstract class Component<
     this.safe(this.onAlloc);
   }
 
-  onRender(): React.ReactNode {
-    return undefined;
-  }
-
   onAlloc() {}
   onCreate() {}
   onDestroy() {}
+
+  onRender(): React.ReactNode | undefined {
+    return undefined;
+  }
 
   onUpdate() {}
   onUpdateProps() {}
@@ -45,49 +45,24 @@ export abstract class Component<
     nextProps: Readonly<Props>,
     nextState: Readonly<State>
   ) {
-    if ((nextProps === null) !== (this.props === null)) {
+    if (!this.equals(this.props, nextProps)) {
       return true;
-    } else {
-      for (const key in nextProps) {
-        const value = nextProps[key];
-        if (value !== this.props[key]) {
-          return true;
-        }
-      }
     }
-    if ((nextState === null) !== (this.state === null)) {
+    if (!this.equals(this.state, nextState)) {
       return true;
-    } else {
-      for (const key in nextState) {
-        const value = nextState[key];
-        if (value !== this.state[key]) {
-          return true;
-        }
-      }
     }
     return false;
   }
   componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
-    for (const key in prevProps) {
-      const value = prevProps[key];
-      if (value !== this.props[key]) {
-        this.safe(this.onUpdateProps);
-        break;
-      }
+    if (!this.equals(this.props, prevProps)) {
+      this.safe(this.onUpdateProps);
     }
-    if ((prevState === null) !== (this.state === null)) {
-      this.onUpdateState();
-    } else {
-      for (const key in prevState) {
-        const value = prevState[key];
-        if (value !== this.state[key]) {
-          this.safe(this.onUpdateState);
-          break;
-        }
-      }
+    if (!this.equals(this.state, prevState)) {
+      this.safe(this.onUpdateState);
     }
     this.safe(this.onUpdate);
   }
+
   render() {
     try {
       return this.onRender() ?? [];
@@ -95,5 +70,34 @@ export abstract class Component<
       console.log('Error', e);
       return [];
     }
+  }
+
+  private equals<T>(a: Readonly<T>, b: Readonly<T>) {
+    /* eslint-disable */
+    if ((a === null) !== (b === null)) {
+      return false;
+    }
+    if (a === b) {
+      return true;
+    }
+    for (const p in a) {
+      if (a.hasOwnProperty(p)) {
+        if (!b.hasOwnProperty(p)) {
+          return false;
+        }
+        if (a[p] !== b[p]) {
+          return false;
+        }
+      }
+    }
+    for (const p in b) {
+      if (b.hasOwnProperty(p)) {
+        if (!a.hasOwnProperty(p)) {
+          return false;
+        }
+      }
+    }
+    return true;
+    /* eslint-enable */
   }
 }
