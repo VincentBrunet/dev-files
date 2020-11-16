@@ -4,6 +4,8 @@ import { AppContainer } from 'react-hot-loader';
 import { hot } from 'react-hot-loader/root';
 import { Application } from './components/Application';
 
+require('./app.css');
+
 // Create main element
 const mainElement = document.createElement('div');
 document.body.innerHTML = '';

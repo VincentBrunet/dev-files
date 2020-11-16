@@ -1,0 +1,10 @@
+body * {
+  display: flex;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+div {
+  flex-grow: 1;
+}

@@ -33,6 +33,8 @@
   },
   "plugins": ["react", "prettier", "@typescript-eslint"],
   "rules": {
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
     "class-methods-use-this": 0,
     "lines-between-class-members": 0,
     "global-require": 0,
