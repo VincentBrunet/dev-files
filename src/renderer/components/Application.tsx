@@ -13,10 +13,6 @@ export class Application extends Component<ApplicationProps, ApplicationState> {
   onDestroy() {}
 
   onRender() {
-    return (
-      <div>
-        <Panel />
-      </div>
-    );
+    return <Panel />;
   }
 }

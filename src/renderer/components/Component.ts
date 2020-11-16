@@ -41,6 +41,7 @@ export abstract class Component<
   componentWillUnmount() {
     this.safe(this.onDestroy);
   }
+
   shouldComponentUpdate(
     nextProps: Readonly<Props>,
     nextState: Readonly<State>
