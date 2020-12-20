@@ -1,7 +1,8 @@
 import * as fs from 'fs';
 import * as React from 'react';
 import { Path } from '../../types/Path';
-import { Component } from '../Component';
+import { Component } from '../primitives/Component';
+import { TailWind } from '../primitives/TailWind';
 import { File } from './File';
 
 export interface FilesProps {
@@ -23,7 +24,7 @@ export class Files extends Component<FilesProps, FilesState> {
   onUpdateProps() {
     fs.readdir(this.props.path.value, (error, files) => {
       if (error) {
-        console.log('readdir error', error);
+        console.error('readdir error', error);
         this.setState({
           files: [],
         });
@@ -38,10 +39,14 @@ export class Files extends Component<FilesProps, FilesState> {
   }
 
   onRender() {
-    const {value} = this.props.path;
+    const { value } = this.props.path;
     const files = this.state.files.map(file => {
       return <File key={file} path={new Path(value + file)} />;
     });
-    return files;
+    return (
+      <TailWind attrs={['flex-col', 'w-full', 'overflow-auto']}>
+        {files}
+      </TailWind>
+    );
   }
 }

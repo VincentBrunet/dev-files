@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Component } from './Component';
-import { Panel } from './triage/Panel';
+import { Component } from './primitives/Component';
+import { Window } from './triage/Window';
 
 export interface ApplicationProps {}
 
@@ -13,6 +13,6 @@ export class Application extends Component<ApplicationProps, ApplicationState> {
   onDestroy() {}
 
   onRender() {
-    return <Panel />;
+    return <Window />;
   }
 }

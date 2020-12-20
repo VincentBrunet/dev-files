@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Path } from '../../types/Path';
-import { Component } from '../Component';
+import { Component } from '../primitives/Component';
 
 export interface PathInputProps {
   path: Path;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Path } from '../../types/Path';
-import { Component } from '../Component';
-import { Layout } from '../primitives/Layout';
+import { Component } from '../primitives/Component';
+import { TailWind } from '../primitives/TailWind';
 import { Files } from './Files';
 import { PathInput } from './PathInput';
 
@@ -24,10 +24,14 @@ export class Panel extends Component<PanelProps, PanelState> {
 
   onRender() {
     return (
-      <Layout direction="column">
-        <PathInput path={this.state.path} onChange={this.onChange} />
-        <Files path={this.state.path} />
-      </Layout>
+      <TailWind attrs={['flex-col', 'w-full']}>
+        <TailWind attrs={['flex-grow-0']}>
+          <PathInput path={this.state.path} onChange={this.onChange} />
+        </TailWind>
+        <TailWind attrs={['flex-shrink']}>
+          <Files path={this.state.path} />
+        </TailWind>
+      </TailWind>
     );
   }
 

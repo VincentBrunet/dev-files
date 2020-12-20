@@ -5,9 +5,11 @@ import { hot } from 'react-hot-loader/root';
 import { Application } from './components/Application';
 
 require('./app.css');
+require('./tailwind.css');
 
 // Create main element
 const mainElement = document.createElement('div');
+mainElement.className = 'root';
 document.body.innerHTML = '';
 document.body.appendChild(mainElement);
 
